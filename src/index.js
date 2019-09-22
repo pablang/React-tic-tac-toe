@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Board from './Board.js'
+import Avatar from './Avatar'
 
 class Game extends React.Component {
   state = {
@@ -37,8 +38,6 @@ class Game extends React.Component {
     });
   }
 
-
-
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -65,13 +64,17 @@ class Game extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
+          <div className="avatar-container">
+            <Avatar avatar="Duke"/>
+            <Avatar avatar="Frankie"/>
+          </div>
+          <div className="game-info">
+            <h3 className="center-text">{status}</h3>
+          </div>
           <Board
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
           />
-        </div>
-        <div className="game-info">
-          <div>{status}</div>
         </div>
       </div>
     );

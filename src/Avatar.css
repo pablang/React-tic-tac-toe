@@ -1,0 +1,25 @@
+.avatar-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Duke {
+  height: 20vw;
+  width: 20vw;
+  background-image: url("./avatars/Duke.png");
+  background-size: cover;
+}
+
+.Frankie {
+  height: 20vw;
+  width: 20vw;
+  background-image: url("./avatars/Frankie.png");
+  background-size: cover;
+}
+
+.Valentina {
+  height: 20vw;
+  width: 20vw;
+  background-image: url("./avatars/Valentina.png");
+  background-size: cover;
+}
