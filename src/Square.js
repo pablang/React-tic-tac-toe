@@ -1,12 +1,15 @@
 import React from 'react'
-
+import './App.css'
+import Avatar from './Avatar'
 
 export default function Square(props) {
   return (
-    <button className="square"
+    <div className="square"
       onClick={() => {props.onClick();
       }}>
-      {props.value}
-    </button>
+        {props.avatar ?
+          <Avatar avatar={props.avatar} /> : ''
+        }
+    </div>
   );
 }
