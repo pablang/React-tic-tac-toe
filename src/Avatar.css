@@ -4,22 +4,22 @@
 }
 
 .Duke {
-  height: 20vw;
-  width: 20vw;
+  height: 100px;
+  width: 100px;
   background-image: url("./avatars/Duke.png");
   background-size: cover;
 }
 
 .Frankie {
-  height: 20vw;
-  width: 20vw;
+  height: 100px;
+  width: 100px;
   background-image: url("./avatars/Frankie.png");
   background-size: cover;
 }
 
 .Valentina {
-  height: 20vw;
-  width: 20vw;
+  height: 100px;
+  width: 100px;
   background-image: url("./avatars/Valentina.png");
   background-size: cover;
 }
