@@ -1,39 +1,7 @@
 import React from 'react';
-// import './index.css';
+import './Game.css';
 import Board from './Board.js'
 import Avatar from './Avatar'
-
-
-function calculateWinner(squares) {
-
-  // check row
-  for (let i = 0; i < 3; i++) {
-    if (squares[i][0] && squares[i][0] === squares[i][1] && squares[i][0] === squares[i][2]) {
-      return [[i, 0], [i, 1], [i, 2]]
-    }
-  }
-
-  // check column
-  for (let j = 0; j < 3; j++) {
-    if (squares[0][j] && squares[0][j] === squares[1][j] && squares[0][j] === squares[2][j]) {
-      return [[0, j], [1, j], [2, j]];
-    }
-  }
-
-  // check diagonals
-  if (squares[0][0] && squares[0][0] === squares[1][1] && squares[0][0] === squares[2][2]) {
-      return [[0, 0], [1, 1], [2, 2]];
-  }
-
-  if (squares[2][0] && squares[2][0] === squares[1][1] && squares[2][0] === squares[0][2]) {
-      return [[2, 0], [1, 1], [0, 2]];
-  }
-
-  return null;
-}
-
-
-
 
 export default class Game extends React.Component {
   constructor(){
@@ -98,7 +66,10 @@ export default class Game extends React.Component {
 
 
   renderAvatar(avatar) {
-    return (<Avatar avatar={avatar} />)
+
+    return (
+      <Avatar avatar={avatar}/>
+    )
   }
 
   jumpTo(step){
@@ -126,7 +97,7 @@ export default class Game extends React.Component {
     } else {
       return (
         <div className="status">
-          <h3>It's player</h3>
+          <h3>It's your turn</h3>
           {this.state.xIsNext ? this.renderAvatar(this.props.X) : this.renderAvatar(this.props.O)}
         </div>
       )
@@ -152,8 +123,36 @@ export default class Game extends React.Component {
             avatarO={this.props.O}
           />
         </div>
-        <button onClick={() => this.jumpTo(0)}>Play Again!</button>
+        <button className="reset" onClick={() => this.jumpTo(0)}>Play Again!</button>
       </div>
     );
   }
+}
+
+function calculateWinner(squares) {
+
+  // check row
+  for (let i = 0; i < 3; i++) {
+    if (squares[i][0] && squares[i][0] === squares[i][1] && squares[i][0] === squares[i][2]) {
+      return [[i, 0], [i, 1], [i, 2]]
+    }
+  }
+
+  // check column
+  for (let j = 0; j < 3; j++) {
+    if (squares[0][j] && squares[0][j] === squares[1][j] && squares[0][j] === squares[2][j]) {
+      return [[0, j], [1, j], [2, j]];
+    }
+  }
+
+  // check diagonals
+  if (squares[0][0] && squares[0][0] === squares[1][1] && squares[0][0] === squares[2][2]) {
+      return [[0, 0], [1, 1], [2, 2]];
+  }
+
+  if (squares[2][0] && squares[2][0] === squares[1][1] && squares[2][0] === squares[0][2]) {
+      return [[2, 0], [1, 1], [0, 2]];
+  }
+
+  return null;
 }
