@@ -21,7 +21,6 @@ export default class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
       winGrid: win,
-      winAnimate: {backgroundColor: 'blue'}
     };
   }
 
@@ -83,7 +82,6 @@ export default class Game extends React.Component {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) ? false : true,
-      winGrid: win
     });
   }
 
@@ -122,6 +120,7 @@ export default class Game extends React.Component {
             onClick={(i,j) => this.handleClick(i,j)}
             avatarX={this.props.X}
             avatarO={this.props.O}
+            win={this.state.winGrid}
           />
         </div>
         <button className="reset" onClick={() => this.resetGame(0)}>Play Again!</button>
