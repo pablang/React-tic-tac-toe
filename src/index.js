@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 // import './index.css';
 import './normalize.css';
 import './skeleton.css';
-import Avatar from './Avatar'
+// import Avatar from './Avatar'
 import Game from './Game'
 import AvatarModal from './AvatarModal'
 
@@ -24,7 +24,7 @@ class App extends React.Component {
   }
 
   render() {
-    console.log("render index")
+    // console.log("render index")
     const {p1, p2} = this.state
     return (
       <div className="main-conatiner">
@@ -32,7 +32,7 @@ class App extends React.Component {
         <AvatarModal setPlayer={this.setPlayer}/>
 
         {
-          this.state.p1 != '' && this.state.p2 != '' ?
+          this.state.p1 !== '' && this.state.p2 !== '' ?
           <Game X={p1} O={p2} />
           : ''
         }

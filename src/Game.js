@@ -1,66 +1,136 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 // import './index.css';
 import Board from './Board.js'
 import Avatar from './Avatar'
 
 
 function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+
+  // check row
+  for (let i = 0; i < 3; i++) {
+    if (squares[i][0] && squares[i][0] === squares[i][1] && squares[i][0] === squares[i][2]) {
+      return [[i, 0], [i, 1], [i, 2]]
     }
   }
+
+  // check column
+  for (let j = 0; j < 3; j++) {
+    if (squares[0][j] && squares[0][j] === squares[1][j] && squares[0][j] === squares[2][j]) {
+      return [[0, j], [1, j], [2, j]];
+    }
+  }
+
+  // check diagonals
+  if (squares[0][0] && squares[0][0] === squares[1][1] && squares[0][0] === squares[2][2]) {
+      return [[0, 0], [1, 1], [2, 2]];
+  }
+
+  if (squares[2][0] && squares[2][0] === squares[1][1] && squares[2][0] === squares[0][2]) {
+      return [[2, 0], [1, 1], [0, 2]];
+  }
+
   return null;
 }
 
+
+
+
 export default class Game extends React.Component {
-  state = {
-    history: [{
-      squares: Array(9).fill(null),
-    }],
-    stepNumber: 0,
-    xIsNext: true,
+  constructor(){
+    super();
+    let grid = [];
+    let win = [];
+    for(let i=0; i<3; i++){
+      let row = Array(3).fill(null);
+      grid.push(row);
+      win.push(row.slice());
+    }
+
+    this.state = {
+      history: [{
+        squares: grid,
+      }],
+      stepNumber: 0,
+      xIsNext: true,
+      winGrid: win,
+      winAnimate: {backgroundColor: 'blue'}
+    };
   }
 
-  handleClick(i) {
+  handleClick(i,j) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
-    const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
+    const squares = [];
+    for(let k=0; k<3; k++){
+      squares.push(current.squares[k].slice());
+    }
+    if(calculateWinner(squares) || squares[i][j]){
       return;
     }
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    squares[i][j] = this.state.xIsNext ? 'X' : 'O';
+    var winCoor = calculateWinner(squares);
+    if(winCoor){
+      // ie [[0,0], [1,1], [2,2]]
+      let win = [];
+      for(let m=0; m<3; m++){
+        let row = Array(3).fill(null);
+        win.push(row);
+      }
+      const c1 = winCoor[0];
+      const c2 = winCoor[1];
+      const c3 = winCoor[2];
+
+      win[c1[0]][c1[1]] = 1;
+      win[c2[0]][c2[1]] = 1;
+      win[c3[0]][c3[1]] = 1;
+
+      this.setState({winGrid: win});
+    }
+
     this.setState({
-      history: history.concat([{
-        squares: squares,
+      history : history.concat([{
+        squares: squares
       }]),
-      stepNumber: history.length,
-      squares: squares,
       xIsNext: !this.state.xIsNext,
+      stepNumber: history.length,
     });
   }
 
-  jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      xIsNext: (step % 2 === 0),
-    });
-  }
 
   renderAvatar(avatar) {
     return (<Avatar avatar={avatar} />)
+  }
+
+  jumpTo(step){
+
+    let win = [];
+    for(let m=0; m<3; m++){
+      let row = Array(3).fill(null);
+      win.push(row);
+    }
+
+    this.setState({
+      stepNumber: step,
+      xIsNext: (step % 2) ? false : true,
+      winGrid: win
+    });
+  }
+
+  renderStatus(winner){
+    if (winner) {
+      return (
+        <div className="status">
+          <h3>The winner is </h3>
+          {this.state.xIsNext ? this.renderAvatar(this.props.O) : this.renderAvatar(this.props.X)}
+        </div>)
+    } else {
+      return (
+        <div className="status">
+          <h3>It's player</h3>
+          {this.state.xIsNext ? this.renderAvatar(this.props.X) : this.renderAvatar(this.props.O)}
+        </div>
+      )
+    }
   }
 
   render() {
@@ -68,38 +138,21 @@ export default class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    const moves = history.map((step, move) => {
-      const desc = move ?
-        'Go to move #' + move :
-        'Go to game start';
-      return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
-        </li>
-      );
-    });
-
-    let status;
-    if (winner) {
-      status = this.renderAvatar(this.props[winner])
-    } else {
-      status = (this.state.xIsNext ? this.renderAvatar(this.props.X) : this.renderAvatar(this.props.O));
-    }
-
     return (
       <div className="game">
         <div className="game-board">
 
           <div className="game-info">
-            {status}
+            {this.renderStatus(winner)}
           </div>
           <Board
             squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
+            onClick={(i,j) => this.handleClick(i,j)}
             avatarX={this.props.X}
             avatarO={this.props.O}
           />
         </div>
+        <button onClick={() => this.jumpTo(0)}>Play Again!</button>
       </div>
     );
   }
