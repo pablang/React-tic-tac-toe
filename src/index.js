@@ -12,7 +12,9 @@ class App extends React.Component {
 
   state = {
     p1: "",
-    p2: ""
+    p2: "",
+    totalGamesPlayed: 1,
+
   }
 
   setPlayer = (avatar, player) => {
@@ -21,6 +23,12 @@ class App extends React.Component {
     } else if(player === 2) {
       this.setState({ p2: avatar})
     }
+  }
+
+  incrementGamesPlayed = () => {
+    this.setState(prevState => {
+      return {totalGamesPlayed: prevState.totalGamesPlayed + 1}
+   });
   }
 
   render() {
@@ -33,7 +41,10 @@ class App extends React.Component {
 
         {
           this.state.p1 !== '' && this.state.p2 !== '' ?
-          <Game X={p1} O={p2} />
+          <div>
+            <h3>Round: {this.state.totalGamesPlayed}</h3>
+            <Game X={p1} O={p2} incrementGamesPlayed={this.incrementGamesPlayed}/>
+          </div>
           : ''
         }
       </div>

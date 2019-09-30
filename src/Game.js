@@ -72,14 +72,14 @@ export default class Game extends React.Component {
     )
   }
 
-  jumpTo(step){
+  resetGame(step){
 
     let win = [];
     for(let m=0; m<3; m++){
       let row = Array(3).fill(null);
       win.push(row);
     }
-
+    this.props.incrementGamesPlayed()
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) ? false : true,
@@ -89,6 +89,7 @@ export default class Game extends React.Component {
 
   renderStatus(winner){
     if (winner) {
+
       return (
         <div className="status">
           <h3>The winner is </h3>
@@ -123,7 +124,7 @@ export default class Game extends React.Component {
             avatarO={this.props.O}
           />
         </div>
-        <button className="reset" onClick={() => this.jumpTo(0)}>Play Again!</button>
+        <button className="reset" onClick={() => this.resetGame(0)}>Play Again!</button>
       </div>
     );
   }
