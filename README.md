@@ -2,7 +2,7 @@
 
 I thought I'd recreate my original vanillaJS tic-tac-toe game using React. I started off just making a basic game using the React tutorial and then expanded on it by adding my own components and refactoring the check winner function and added extra features.
 
-![Screen shot](/public/Screen-Shot.png)
+![tictactoe](https://user-images.githubusercontent.com/51078359/65876796-77d8ab80-e3cd-11e9-8c83-403898fea9f8.gif)
 
 ### Features
 - Players are able to choose avatars before startiing the game
