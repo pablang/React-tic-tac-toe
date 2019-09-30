@@ -12,7 +12,10 @@ h1, h3 {
   width: 20vmin;
   height: 20vmin;
   border: 1px solid grey;
-  text-align: center;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .board {
