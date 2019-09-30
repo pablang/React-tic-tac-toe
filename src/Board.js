@@ -4,14 +4,13 @@ import './Board.css'
 
 export default class Board extends React.Component {
 
-
   renderSquare(i,j) {
     const avatar =
     this.props.squares[i][j] === 'X' ?
     this.props.avatarX + " roll-in-blurred-left" :
     this.props.squares[i][j] === 'O' ?
     this.props.avatarO + " roll-in-blurred-right" : ''
-
+    debugger
     const animate = this.props.win[i][j] ? ' jello-vertical' : ''
 
     return (
