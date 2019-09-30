@@ -8,7 +8,6 @@ export default class AvatarModal extends React.Component {
   }
 
   renderAvatar(avatar, player){
-    // console.log("Modal " + avatar)
     return (
       <Avatar avatar={avatar}
       onClick={() => {
@@ -20,7 +19,6 @@ export default class AvatarModal extends React.Component {
   }
 
   render() {
-    console.log("render AM")
     return (
       this.state.step < 3 ?
       (<section className="choose-avatar">

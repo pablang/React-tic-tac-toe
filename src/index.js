@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import './index.css';
 import './normalize.css';
 import './skeleton.css';
-import Avatar from './Avatar'
+// import Avatar from './Avatar'
 import Game from './Game'
 import AvatarModal from './AvatarModal'
 
@@ -12,7 +11,9 @@ class App extends React.Component {
 
   state = {
     p1: "",
-    p2: ""
+    p2: "",
+    totalGamesPlayed: 1,
+
   }
 
   setPlayer = (avatar, player) => {
@@ -23,8 +24,14 @@ class App extends React.Component {
     }
   }
 
+  incrementGamesPlayed = () => {
+    this.setState(prevState => {
+      return {totalGamesPlayed: prevState.totalGamesPlayed + 1}
+   });
+  }
+
   render() {
-    console.log("render index")
+    // console.log("render index")
     const {p1, p2} = this.state
     return (
       <div className="main-conatiner">
@@ -32,8 +39,11 @@ class App extends React.Component {
         <AvatarModal setPlayer={this.setPlayer}/>
 
         {
-          this.state.p1 != '' && this.state.p2 != '' ?
-          <Game X={p1} O={p2} />
+          this.state.p1 !== '' && this.state.p2 !== '' ?
+          <div>
+            <h3>Round: {this.state.totalGamesPlayed}</h3>
+            <Game X={p1} O={p2} incrementGamesPlayed={this.incrementGamesPlayed}/>
+          </div>
           : ''
         }
       </div>

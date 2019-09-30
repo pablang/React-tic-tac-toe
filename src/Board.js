@@ -1,39 +1,41 @@
 import React from 'react'
 import Square from './Square'
+import './Board.css'
 
 export default class Board extends React.Component {
 
-  renderSquare(i) {
+
+  renderSquare(i,j) {
+    const avatar =
+    this.props.squares[i][j] === 'X' ?
+    this.props.avatarX + " roll-in-blurred-left" :
+    this.props.squares[i][j] === 'O' ?
+    this.props.avatarO + " roll-in-blurred-right" : ''
+
+    const animate = this.props.win[i][j] ? ' jello-vertical' : ''
+
     return (
       <Square
-        avatar={
-          this.props.squares[i] === 'X' ?
-            this.props.avatarX :
-            this.props.squares[i] === 'O' ?
-            this.props.avatarO : ''}
-        onClick={() => this.props.onClick(i)}
+        avatar={avatar + animate}
+        onClick={() => this.props.onClick(i,j)}
      />
     );
   }
 
   render() {
+    var rows = [];
+    for(var i=0; i<3; i++){
+      var row = [];
+      for(var j=0; j<3; j++){
+        row.push(this.renderSquare(i, j));
+      }
+      rows.push(<div key={i} className="board-row"> {row} </div>);
+    }
+
     return (
       <div className="board">
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
+          {rows}
+
       </div>
     );
   }

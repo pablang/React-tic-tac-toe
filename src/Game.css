@@ -1,0 +1,15 @@
+.status {
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
+  align-items: baseline;
+}
+
+.status h3 {
+  margin-right: 20px;
+}
+.reset {
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
+}
